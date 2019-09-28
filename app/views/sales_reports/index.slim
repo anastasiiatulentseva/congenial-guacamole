@@ -1,0 +1,24 @@
+.filter
+  .input-group.mb-3
+    .input-group-prepend
+      button.btn.btn-outline-secondary.dropdown-toggle data-toggle="dropdown" type="button"  Last name
+      .dropdown-menu
+        a.dropdown-item href="#"  Last Name
+        a.dropdown-item href="#"  Email
+    input.form-control placeholder="Filter by email or last name" type="text"
+.table-responsive
+  table.table.table-striped
+    thead.thead-dark
+      tr
+        th ID
+        th First name
+        th
+          | Last name
+          i.fa.fa-arrow-up
+        th
+          | Email
+          i.fa.fa-arrow-up
+        th Amount
+    tbody
+      - @records.each do |record|
+        = render 'record', record: record
