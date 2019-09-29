@@ -10,11 +10,19 @@ $(document).on('turbolinks:load', function () {
       table.find('td').filter(function () {
         return $(this).index() === thIndex;
       }).sortElements(function (a, b) {
-        if ($.text([a]) === $.text([b]) || parseFloat($.text([a])) === parseFloat($.text([b])))
-          return 0;
-        return $.text([a]) > $.text([b]) || parseFloat($.text([a])) > parseFloat($.text([b])) ?
-          inverse ? -1 : 1
-          : inverse ? 1 : -1;
+        if (isNaN(parseFloat($.text([a]))) || isNaN(parseFloat($.text([b]))) ) {
+          if ($.text([a]) === $.text([b]))
+            return 0;
+          return $.text([a]) > $.text([b]) ?
+            inverse ? -1 : 1
+            : inverse ? 1 : -1;
+        } else {
+          if (parseFloat($.text([a])) === parseFloat($.text([b])))
+            return 0;
+          return parseFloat($.text([a])) > parseFloat($.text([b])) ?
+            inverse ? -1 : 1
+            : inverse ? 1 : -1;
+        }
       }, function () {
         // parentNode is the element we want to move
         return this.parentNode;

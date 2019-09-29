@@ -1,7 +1,7 @@
+# frozen_string_literal: true
+
 module CurrencyHelper
-
   def to_currency(number)
-    sprintf('%.2f', number)
+    format('%.2f', number)
   end
-
 end

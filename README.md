@@ -1,24 +1,41 @@
-# README
+### Sales report by Anastasiia Tulentseva
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To run application:
 
-Things you may want to cover:
+1. Install needed gems 
 
-* Ruby version
+       bundle install
+       
+2. Create SQlite database 
 
-* System dependencies
+       bundle exec rake db:create
+       
+3. Migrate the database 
 
-* Configuration
+       bundle exec rake db:migrate
+       
+4. Seed the database 
 
-* Database creation
+       bundle exec rake db:seed
+       
+5. Run the rails server 
 
-* Database initialization
+       bundle exec rails s
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To run tests:
+          
+    bundle exec rspec spec
+    
+To create new records send POST request
+```
+curl -X POST \
+  http://localhost:3000/api/messages \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d '{
+    "email": "john@test.com", 
+    "first_name": "John", 
+    "last_name": "Snow", 
+    "amount": 500.67
+}'
+```
