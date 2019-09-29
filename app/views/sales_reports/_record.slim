@@ -1,6 +1,8 @@
 tr
   td #{record.id}
   td #{record.first_name}
-  td #{record.last_name}
-  td #{record.email}
-  td #{record.amount}
+  td.js-filterable data-filter-by='Last name'
+    = record.last_name
+  td.js-filterable data-filter-by='Email'
+    = record.email
+  td #{to_currency(record.amount)}
