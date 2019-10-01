@@ -10,8 +10,8 @@ $(document).on('turbolinks:load', function () {
       table.find('td').filter(function () {
         return $(this).index() === thIndex;
       }).sortElements(function (a, b) {
-        a = string_of_number($.text([a]));
-        b = string_of_number($.text([b]));
+        a = string_or_number($.text([a]));
+        b = string_or_number($.text([b]));
         if (a === b) return 0;
         return a > b ?
           inverse ? -1 : 1
@@ -24,7 +24,7 @@ $(document).on('turbolinks:load', function () {
     });
   });
 
-  var string_of_number = function (value) {
+  var string_or_number = function (value) {
     var parsed_value = parseFloat(value)
     return isNaN(parsed_value) ? value : parsed_value
   }
