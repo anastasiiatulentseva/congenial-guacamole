@@ -10,19 +10,12 @@ $(document).on('turbolinks:load', function () {
       table.find('td').filter(function () {
         return $(this).index() === thIndex;
       }).sortElements(function (a, b) {
-        if (isNaN(parseFloat($.text([a]))) || isNaN(parseFloat($.text([b]))) ) {
-          if ($.text([a]) === $.text([b]))
-            return 0;
-          return $.text([a]) > $.text([b]) ?
-            inverse ? -1 : 1
-            : inverse ? 1 : -1;
-        } else {
-          if (parseFloat($.text([a])) === parseFloat($.text([b])))
-            return 0;
-          return parseFloat($.text([a])) > parseFloat($.text([b])) ?
-            inverse ? -1 : 1
-            : inverse ? 1 : -1;
-        }
+        a = string_of_number($.text([a]));
+        b = string_of_number($.text([b]));
+        if (a === b) return 0;
+        return a > b ?
+          inverse ? -1 : 1
+          : inverse ? 1 : -1;
       }, function () {
         // parentNode is the element we want to move
         return this.parentNode;
@@ -30,6 +23,11 @@ $(document).on('turbolinks:load', function () {
       inverse = !inverse;
     });
   });
+
+  var string_of_number = function (value) {
+    var parsed_value = parseFloat(value)
+    return isNaN(parsed_value) ? value : parsed_value
+  }
 
   // rows filter
 
