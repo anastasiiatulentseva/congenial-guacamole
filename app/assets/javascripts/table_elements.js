@@ -1,60 +1,55 @@
-// $(document).on('turbolinks:load', function () {
-//   var table = $('.js-reports-table');
-//
-//   // table sorting
-//   $('th.js-th-sortable').each(function () {
-//     var th = $(this);
-//     var thIndex = th.index();
-//     var inverse = false;
-//     th.click(function () {
-//       table.find('td').filter(function () {
-//         return $(this).index() === thIndex;
-//       }).sortElements(function (a, b) {
-//         a = string_or_number($.text([a]));
-//         b = string_or_number($.text([b]));
-//         if (a === b) return 0;
-//         return a > b ?
-//           inverse ? -1 : 1
-//           : inverse ? 1 : -1;
-//       }, function () {
-//         // parentNode is the element we want to move
-//         return this.parentNode;
-//       });
-//       inverse = !inverse;
-//     });
-//   });
-//
-//   var string_or_number = function (value) {
-//     var parsed_value = parseFloat(value)
-//     return isNaN(parsed_value) ? value : parsed_value
-//   }
-//
-//   // rows filter
-//
-//   // filter select
-//   var filterTypeButton = $('.js-filter-selected');
-//   var filterBy = function () {
-//     return filterTypeButton.text().trim();
-//   };
-//
-//   $('.js-filter-option').click(function (e) {
-//     // cancel the link behaviour
-//     e.preventDefault();
-//     filterTypeButton.text($(this).text());
-//     $('.js-filter-input').trigger('input');
-//   });
-//
-//   // filtering
-//   $('.js-filter-input').on('input', function () {
-//     var inputValue = this.value.toLowerCase();
-//     var filterType = filterBy();
-//     table.find("td.js-filterable[data-filter-by='" + filterType + "']").each(
-//       function () {
-//         if ($(this).text().toLowerCase().includes(inputValue) || !inputValue) {
-//           $(this).parent().show();
-//         } else {
-//           $(this).parent().hide();
-//         }
-//       });
-//   });
-// });
+'use strict'
+
+$(document).on('turbolinks:load', () => {
+  const table = $('.js-reports-table')
+
+  $('th.js-th-sortable').each((idx, headerCell) => {
+    const th = $(headerCell)
+    const thIndex = th.index()
+    let inverse = false
+    th.on('click', () => {
+      table.find('td')
+        .filter((tdIdx, td) => $(td).index() === thIndex)
+        .sortElements((a, b) => {
+          a = string_or_number($.text([a]))
+          b = string_or_number($.text([b]))
+          if (a === b) return 0
+          return a > b ?
+            inverse ? -1 : 1
+            : inverse ? 1 : -1
+        })
+      inverse = !inverse
+    })
+  })
+
+  const string_or_number = (value) => {
+    const parsed_value = parseFloat(value)
+    return isNaN(parsed_value) ? value : parsed_value
+  }
+
+// rows filter
+
+// filter select
+  const filterTypeButton = $('.js-filter-selected')
+  const filterBy = () => filterTypeButton.text().trim()
+
+  $('.js-filter-option').click((e) => {
+    // cancel the link behaviour
+    e.preventDefault()
+    filterTypeButton.text(e.target.text)
+    $('.js-filter-input').trigger('input')
+  })
+
+// filtering
+  $('.js-filter-input').on('input', (event) => {
+    const inputValue = event.target.value.toLowerCase()
+    const filterType = filterBy()
+    table.find("td.js-filterable[data-filter-by='" + filterType + "']").each((idx, td) => {
+      if ($(td).text().toLowerCase().includes(inputValue) || !inputValue) {
+        $(td).parent().show()
+      } else {
+        $(td).parent().hide()
+      }
+    })
+  })
+})

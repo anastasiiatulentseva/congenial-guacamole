@@ -21,6 +21,10 @@ To run application:
 5. Run the rails server 
 
        bundle exec rails s
+       
+6. Run sidekiq 
+
+       bundle exec sidekiq
 
 To run tests:
           
